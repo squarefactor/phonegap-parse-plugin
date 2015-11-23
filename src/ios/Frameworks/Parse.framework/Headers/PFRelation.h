@@ -1,18 +1,18 @@
-//
-//  PFRelation.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
-#if TARGET_OS_IPHONE
 #import <Parse/PFObject.h>
 #import <Parse/PFQuery.h>
-#else
-#import <ParseOSX/PFObject.h>
-#import <ParseOSX/PFQuery.h>
-#endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
  The `PFRelation` class that is used to access all of the children of a many-to-many relationship.
@@ -23,7 +23,7 @@
 /*!
  @abstract The name of the class of the target child objects.
  */
-@property (nonatomic, strong) NSString *targetClass;
+@property (nullable, nonatomic, copy) NSString *targetClass;
 
 ///--------------------------------------
 /// @name Accessing Objects
@@ -53,3 +53,5 @@
 - (void)removeObject:(PFObject *)object;
 
 @end
+
+NS_ASSUME_NONNULL_END

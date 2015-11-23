@@ -1,18 +1,19 @@
-//
-//  PFAnalytics.h
-//
-//  Copyright 2011-present Parse Inc. All rights reserved.
-//
+/**
+ * Copyright (c) 2015-present, Parse, LLC.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
 
 #import <Foundation/Foundation.h>
 
-#if TARGET_OS_IPHONE
-#import <Parse/PFConstants.h>
-#else
-#import <ParseOSX/PFConstants.h>
-#endif
+#import <Bolts/BFTask.h>
 
-@class BFTask;
+#import <Parse/PFConstants.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
  `PFAnalytics` provides an interface to Parse's logging and analytics backend.
@@ -40,7 +41,7 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackAppOpenedWithLaunchOptions:(NSDictionary *)launchOptions;
++ (BFTask PF_GENERIC(NSNumber *)*)trackAppOpenedWithLaunchOptions:(nullable NSDictionary *)launchOptions;
 
 /*!
  @abstract Tracks this application being launched.
@@ -55,7 +56,8 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackAppOpenedWithLaunchOptionsInBackground:(NSDictionary *)launchOptions block:(PFBooleanResultBlock)block;
++ (void)trackAppOpenedWithLaunchOptionsInBackground:(nullable NSDictionary *)launchOptions
+                                              block:(nullable PFBooleanResultBlock)block;
 
 /*!
  @abstract Tracks this application being launched. If this happened as the result of the
@@ -69,7 +71,7 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackAppOpenedWithRemoteNotificationPayload:(NSDictionary *)userInfo;
++ (BFTask PF_GENERIC(NSNumber *)*)trackAppOpenedWithRemoteNotificationPayload:(nullable NSDictionary *)userInfo;
 
 /*!
  @abstract Tracks this application being launched. If this happened as the result of the
@@ -82,8 +84,8 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackAppOpenedWithRemoteNotificationPayloadInBackground:(NSDictionary *)userInfo
-                                                          block:(PFBooleanResultBlock)block;
++ (void)trackAppOpenedWithRemoteNotificationPayloadInBackground:(nullable NSDictionary *)userInfo
+                                                          block:(nullable PFBooleanResultBlock)block;
 
 ///--------------------------------------
 /// @name Custom Analytics
@@ -98,7 +100,7 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackEvent:(NSString *)name;
++ (BFTask PF_GENERIC(NSNumber *)*)trackEvent:(NSString *)name;
 
 /*!
  @abstract Tracks the occurrence of a custom event. Parse will store a data point at the
@@ -109,7 +111,7 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackEventInBackground:(NSString *)name block:(PFBooleanResultBlock)block;
++ (void)trackEventInBackground:(NSString *)name block:(nullable PFBooleanResultBlock)block;
 
 /*!
  @abstract Tracks the occurrence of a custom event with additional dimensions. Parse will
@@ -132,7 +134,8 @@
 
  @returns Returns the task encapsulating the work being done.
  */
-+ (BFTask *)trackEvent:(NSString *)name dimensions:(NSDictionary *)dimensions;
++ (BFTask PF_GENERIC(NSNumber *)*)trackEvent:(NSString *)name
+                                  dimensions:(nullable NSDictionary PF_GENERIC(NSString *, NSString *)*)dimensions;
 
 /*!
  @abstract Tracks the occurrence of a custom event with additional dimensions. Parse will
@@ -155,6 +158,10 @@
  @param block The block to execute on server response.
  It should have the following argument signature: `^(BOOL succeeded, NSError *error)`
  */
-+ (void)trackEventInBackground:(NSString *)name dimensions:(NSDictionary *)dimensions block:(PFBooleanResultBlock)block;
++ (void)trackEventInBackground:(NSString *)name
+                    dimensions:(nullable NSDictionary PF_GENERIC(NSString *, NSString *)*)dimensions
+                         block:(nullable PFBooleanResultBlock)block;
 
 @end
+
+NS_ASSUME_NONNULL_END
